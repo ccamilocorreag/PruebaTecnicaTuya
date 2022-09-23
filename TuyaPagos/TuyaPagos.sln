@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TuyaPagos.WebApi", "TuyaPagos.WebApi\TuyaPagos.WebApi.csproj", "{6C617DA6-7A3B-460A-8655-0F7E8DBDF5A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TuyaPagos.Tests", "TuyaPagos.Tests\TuyaPagos.Tests.csproj", "{8CDF82A2-904A-4115-BC89-692F7FED405F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TuyaPagos.Application", "TuyaPagos.Application\TuyaPagos.Application.csproj", "{F2FD606B-907E-4788-8526-65C3D5EFD658}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TuyaPagos.Domain", "TuyaPagos.Domain\TuyaPagos.Domain.csproj", "{F1B845D4-6FA3-4DB0-9A82-6EB039EEE3A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TuyaPagos.Infraestructure", "TuyaPagos.Infraestructure\TuyaPagos.Infraestructure.csproj", "{436E7DE6-DE67-47CB-AD65-41282ACAD4CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C617DA6-7A3B-460A-8655-0F7E8DBDF5A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C617DA6-7A3B-460A-8655-0F7E8DBDF5A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C617DA6-7A3B-460A-8655-0F7E8DBDF5A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C617DA6-7A3B-460A-8655-0F7E8DBDF5A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CDF82A2-904A-4115-BC89-692F7FED405F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CDF82A2-904A-4115-BC89-692F7FED405F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CDF82A2-904A-4115-BC89-692F7FED405F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CDF82A2-904A-4115-BC89-692F7FED405F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2FD606B-907E-4788-8526-65C3D5EFD658}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2FD606B-907E-4788-8526-65C3D5EFD658}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2FD606B-907E-4788-8526-65C3D5EFD658}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2FD606B-907E-4788-8526-65C3D5EFD658}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1B845D4-6FA3-4DB0-9A82-6EB039EEE3A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B845D4-6FA3-4DB0-9A82-6EB039EEE3A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B845D4-6FA3-4DB0-9A82-6EB039EEE3A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B845D4-6FA3-4DB0-9A82-6EB039EEE3A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{436E7DE6-DE67-47CB-AD65-41282ACAD4CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{436E7DE6-DE67-47CB-AD65-41282ACAD4CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{436E7DE6-DE67-47CB-AD65-41282ACAD4CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{436E7DE6-DE67-47CB-AD65-41282ACAD4CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {520EFE2C-3B23-4982-90B8-5196FA99C28C}
+	EndGlobalSection
+EndGlobal
