@@ -12,8 +12,8 @@ using TuyaPagos.Infraestructure.Data;
 namespace TuyaPagos.Infraestructure.Migrations
 {
     [DbContext(typeof(TuyaPagosContext))]
-    [Migration("20220923021825_Initial")]
-    partial class Initial
+    [Migration("20220923210746_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,48 +26,44 @@ namespace TuyaPagos.Infraestructure.Migrations
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.Cliente", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    b.Property<string>("Cedula")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Apellidos")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Cedula")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<string>("Nombres")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Cedula");
 
                     b.ToTable("Clientes");
                 });
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.DetalleFactura", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<long>("FacturaId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("FacturaId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Impuesto")
                         .HasColumnType("int");
 
-                    b.Property<long>("ProductoId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
 
                     b.Property<long>("ValorBruto")
                         .HasColumnType("bigint");
@@ -86,14 +82,18 @@ namespace TuyaPagos.Infraestructure.Migrations
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.Factura", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<long>("ClienteId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("ClienteCedula")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
@@ -101,8 +101,7 @@ namespace TuyaPagos.Infraestructure.Migrations
                     b.Property<int>("Impuesto")
                         .HasColumnType("int");
 
-                    b.Property<string>("Numero")
-                        .IsRequired()
+                    b.Property<string>("Observaciones")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("ValorBruto")
@@ -113,18 +112,18 @@ namespace TuyaPagos.Infraestructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("ClienteCedula");
 
                     b.ToTable("Facturas");
                 });
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.Producto", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
@@ -143,6 +142,40 @@ namespace TuyaPagos.Infraestructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Productos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Descripcion = "Tarjeta de crédito",
+                            Nombre = "Tarjeta de Crédito Éxito",
+                            PorcentajeImpuesto = 19,
+                            Precio = 1000L
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Descripcion = "Tarjeta de crédito",
+                            Nombre = "Tarjeta de Crédito Carulla",
+                            PorcentajeImpuesto = 0,
+                            Precio = 4000L
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Descripcion = "Tarjeta de crédito",
+                            Nombre = "Tarjeta de Crédito Alkosto",
+                            PorcentajeImpuesto = 10,
+                            Precio = 3000L
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Descripcion = "Tarjeta de crédito",
+                            Nombre = "Tarjeta de Crédito Claro",
+                            PorcentajeImpuesto = 10,
+                            Precio = 2000L
+                        });
                 });
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.DetalleFactura", b =>
@@ -168,7 +201,7 @@ namespace TuyaPagos.Infraestructure.Migrations
                 {
                     b.HasOne("TuyaPagos.Domain.Entities.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteId")
+                        .HasForeignKey("ClienteCedula")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

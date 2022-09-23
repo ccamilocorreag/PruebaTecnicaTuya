@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TuyaPagos.Infraestructure.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,22 +13,21 @@ namespace TuyaPagos.Infraestructure.Migrations
                 name: "Clientes",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Cedula = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cedula = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Nombres = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Apellidos = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
+                    table.PrimaryKey("PK_Clientes", x => x.Cedula);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -44,23 +43,24 @@ namespace TuyaPagos.Infraestructure.Migrations
                 name: "Facturas",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Numero = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ClienteId = table.Column<long>(type: "bigint", nullable: false),
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    ClienteCedula = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ValorBruto = table.Column<long>(type: "bigint", nullable: false),
                     Impuesto = table.Column<int>(type: "int", nullable: false),
-                    ValorNeto = table.Column<long>(type: "bigint", nullable: false)
+                    ValorNeto = table.Column<long>(type: "bigint", nullable: false),
+                    Observaciones = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Facturas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Facturas_Clientes_ClienteId",
-                        column: x => x.ClienteId,
+                        name: "FK_Facturas_Clientes_ClienteCedula",
+                        column: x => x.ClienteCedula,
                         principalTable: "Clientes",
-                        principalColumn: "Id",
+                        principalColumn: "Cedula",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -68,11 +68,11 @@ namespace TuyaPagos.Infraestructure.Migrations
                 name: "DetallesFactura",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FacturaId = table.Column<long>(type: "bigint", nullable: false),
+                    FacturaId = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
-                    ProductoId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductoId = table.Column<int>(type: "int", nullable: false),
                     ValorBruto = table.Column<long>(type: "bigint", nullable: false),
                     Impuesto = table.Column<int>(type: "int", nullable: false),
                     ValorNeto = table.Column<long>(type: "bigint", nullable: false)
@@ -94,6 +94,17 @@ namespace TuyaPagos.Infraestructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Productos",
+                columns: new[] { "Id", "Descripcion", "Nombre", "PorcentajeImpuesto", "Precio" },
+                values: new object[,]
+                {
+                    { 1, "Tarjeta de crédito", "Tarjeta de Crédito Éxito", 19, 1000L },
+                    { 2, "Tarjeta de crédito", "Tarjeta de Crédito Carulla", 0, 4000L },
+                    { 3, "Tarjeta de crédito", "Tarjeta de Crédito Alkosto", 10, 3000L },
+                    { 4, "Tarjeta de crédito", "Tarjeta de Crédito Claro", 10, 2000L }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_DetallesFactura_FacturaId",
                 table: "DetallesFactura",
@@ -105,9 +116,9 @@ namespace TuyaPagos.Infraestructure.Migrations
                 column: "ProductoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Facturas_ClienteId",
+                name: "IX_Facturas_ClienteCedula",
                 table: "Facturas",
-                column: "ClienteId");
+                column: "ClienteCedula");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

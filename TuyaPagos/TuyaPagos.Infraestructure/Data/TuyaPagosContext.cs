@@ -17,12 +17,43 @@ namespace TuyaPagos.Infraestructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Cliente>(entity =>
-            //{
-            //    entity.ToTable("Clientes");
-            //    entity.HasKey(k => k.Id);
-            //    entity.
-            //});
+            modelBuilder.Entity<Producto>(entity =>
+            {
+                entity.HasData(new Producto()
+                {
+                    Id = 1,
+                    Nombre = "Tarjeta de Crédito Éxito",
+                    Descripcion = "Tarjeta de crédito",
+                    PorcentajeImpuesto = 19,
+                    Precio = 1000
+                }, new Producto()
+                {
+                    Id = 2,
+                    Nombre = "Tarjeta de Crédito Carulla",
+                    Descripcion = "Tarjeta de crédito",
+                    PorcentajeImpuesto = 0,
+                    Precio = 4000
+                }, new Producto()
+                {
+                    Id = 3,
+                    Nombre = "Tarjeta de Crédito Alkosto",
+                    Descripcion = "Tarjeta de crédito",
+                    PorcentajeImpuesto = 10,
+                    Precio = 3000
+                }, new Producto()
+                {
+                    Id = 4,
+                    Nombre = "Tarjeta de Crédito Claro",
+                    Descripcion = "Tarjeta de crédito",
+                    PorcentajeImpuesto = 10,
+                    Precio = 2000
+                });
+            });
+
+            modelBuilder.Entity<Cliente>(entity =>
+            {
+                entity.HasKey(k => k.Cedula);
+            });
         }
 
         public virtual DbSet<Factura> Facturas { get; set; }

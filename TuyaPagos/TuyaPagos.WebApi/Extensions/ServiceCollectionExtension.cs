@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TuyaPagos.Application.Services.Facturacion;
 using TuyaPagos.Domain.Interfaces;
+using TuyaPagos.Domain.Services;
 using TuyaPagos.Infraestructure.Data;
 using TuyaPagos.Infraestructure.Data.Repositories;
+using TuyaPagos.Infraestructure.Logging;
 
 namespace TuyaPagos.WebApi.Extensions
 {
@@ -11,7 +13,7 @@ namespace TuyaPagos.WebApi.Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             return services
-                .AddScoped(typeof(GenericRepository<>), typeof(GenericRepository<>))
+                .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>))
                 .AddScoped<IFacturacionRepository, FacturacionRepository>()
                 .AddScoped<IClientesRepository, ClientesRepository>()
                 .AddScoped<IProductosRepository, ProductosRepository>()
@@ -21,6 +23,7 @@ namespace TuyaPagos.WebApi.Extensions
         public static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
             return services
+                .AddScoped(typeof(ILogService<>), typeof(LogService<>))
                 .AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
@@ -36,7 +39,11 @@ namespace TuyaPagos.WebApi.Extensions
            )
         {
             return services
-                .AddTransient<IFacturacionAppService, FacturacionAppService>();
+                .AddScoped<IClientesDomainService, ClientesDomainService>()
+                .AddScoped<IFacturacionDomainService, FacturacionDomainService>()
+                .AddScoped<IProductosDomainService, ProductosDomainService>()
+
+                .AddScoped<IFacturacionAppService, FacturacionAppService>();
         }
     }
 }

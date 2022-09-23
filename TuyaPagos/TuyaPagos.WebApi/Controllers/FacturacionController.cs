@@ -5,6 +5,8 @@ using TuyaPagos.Infraestructure.Logging;
 
 namespace TuyaPagos.WebApi.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class FacturacionController : Controller
     {
         private readonly IFacturacionAppService _facturacionAppService;
@@ -17,7 +19,6 @@ namespace TuyaPagos.WebApi.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FacturaInputDto facturaInput)
         {
             _logService.Log("Creando factura ...");
