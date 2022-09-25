@@ -12,8 +12,8 @@ using TuyaPagos.Infraestructure.Data;
 namespace TuyaPagos.Infraestructure.Migrations
 {
     [DbContext(typeof(TuyaPagosContext))]
-    [Migration("20220923210746_Init")]
-    partial class Init
+    [Migration("20220925032456_AjusteTamanosCampos")]
+    partial class AjusteTamanosCampos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,23 +26,30 @@ namespace TuyaPagos.Infraestructure.Migrations
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.Cliente", b =>
                 {
-                    b.Property<string>("Cedula")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Apellidos")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<string>("Cedula")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Nombres")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
-                    b.HasKey("Cedula");
+                    b.HasKey("Id");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Clientes", (string)null);
                 });
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.DetalleFactura", b =>
@@ -77,7 +84,7 @@ namespace TuyaPagos.Infraestructure.Migrations
 
                     b.HasIndex("ProductoId");
 
-                    b.ToTable("DetallesFactura");
+                    b.ToTable("DetalleFactura", (string)null);
                 });
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.Factura", b =>
@@ -87,10 +94,6 @@ namespace TuyaPagos.Infraestructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ClienteCedula")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
@@ -102,7 +105,8 @@ namespace TuyaPagos.Infraestructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Observaciones")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<long>("ValorBruto")
                         .HasColumnType("bigint");
@@ -112,9 +116,50 @@ namespace TuyaPagos.Infraestructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteCedula");
+                    b.HasIndex("ClienteId");
 
-                    b.ToTable("Facturas");
+                    b.ToTable("Facturas", (string)null);
+                });
+
+            modelBuilder.Entity("TuyaPagos.Domain.Entities.Pedido", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Ciudad")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("Departamento")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("FacturaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FacturaId");
+
+                    b.ToTable("Pedidos", (string)null);
                 });
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.Producto", b =>
@@ -127,11 +172,13 @@ namespace TuyaPagos.Infraestructure.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.Property<int>("PorcentajeImpuesto")
                         .HasColumnType("int");
@@ -141,7 +188,7 @@ namespace TuyaPagos.Infraestructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Productos");
+                    b.ToTable("Productos", (string)null);
 
                     b.HasData(
                         new
@@ -180,35 +227,58 @@ namespace TuyaPagos.Infraestructure.Migrations
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.DetalleFactura", b =>
                 {
-                    b.HasOne("TuyaPagos.Domain.Entities.Factura", "Factura")
+                    b.HasOne("TuyaPagos.Domain.Entities.Factura", "FacturaFk")
                         .WithMany("DetalleFactura")
                         .HasForeignKey("FacturaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TuyaPagos.Domain.Entities.Producto", "Producto")
-                        .WithMany()
+                    b.HasOne("TuyaPagos.Domain.Entities.Producto", "ProductoFk")
+                        .WithMany("DetalleFactura")
                         .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Factura");
+                    b.Navigation("FacturaFk");
 
-                    b.Navigation("Producto");
+                    b.Navigation("ProductoFk");
                 });
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.Factura", b =>
                 {
-                    b.HasOne("TuyaPagos.Domain.Entities.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteCedula")
+                    b.HasOne("TuyaPagos.Domain.Entities.Cliente", "ClienteFk")
+                        .WithMany("Facturas")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cliente");
+                    b.Navigation("ClienteFk");
+                });
+
+            modelBuilder.Entity("TuyaPagos.Domain.Entities.Pedido", b =>
+                {
+                    b.HasOne("TuyaPagos.Domain.Entities.Factura", "FacturaFk")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("FacturaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FacturaFk");
+                });
+
+            modelBuilder.Entity("TuyaPagos.Domain.Entities.Cliente", b =>
+                {
+                    b.Navigation("Facturas");
                 });
 
             modelBuilder.Entity("TuyaPagos.Domain.Entities.Factura", b =>
+                {
+                    b.Navigation("DetalleFactura");
+
+                    b.Navigation("Pedidos");
+                });
+
+            modelBuilder.Entity("TuyaPagos.Domain.Entities.Producto", b =>
                 {
                     b.Navigation("DetalleFactura");
                 });

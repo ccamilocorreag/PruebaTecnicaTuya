@@ -1,9 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TuyaPagos.Application.Services.Facturacion;
+using TuyaPagos.Application.Services.Pedidos;
 using TuyaPagos.Domain.Interfaces;
-using TuyaPagos.Domain.Services;
+using TuyaPagos.Domain.Services.Clientes;
+using TuyaPagos.Domain.Services.Facturacion;
+using TuyaPagos.Domain.Services.Pedidos;
+using TuyaPagos.Domain.Services.Productos;
 using TuyaPagos.Infraestructure.Data;
 using TuyaPagos.Infraestructure.Data.Repositories;
+using TuyaPagos.Infraestructure.Data.Repositories.Clientes;
+using TuyaPagos.Infraestructure.Data.Repositories.Facturacion;
+using TuyaPagos.Infraestructure.Data.Repositories.Pedidos;
+using TuyaPagos.Infraestructure.Data.Repositories.Productos;
 using TuyaPagos.Infraestructure.Logging;
 
 namespace TuyaPagos.WebApi.Extensions
@@ -42,8 +50,10 @@ namespace TuyaPagos.WebApi.Extensions
                 .AddScoped<IClientesDomainService, ClientesDomainService>()
                 .AddScoped<IFacturacionDomainService, FacturacionDomainService>()
                 .AddScoped<IProductosDomainService, ProductosDomainService>()
+                .AddScoped<IPedidosDomainService, PedidosDomainService>()
 
-                .AddScoped<IFacturacionAppService, FacturacionAppService>();
+                .AddScoped<IFacturacionAppService, FacturacionAppService>()
+                .AddScoped<IPedidosAppService, PedidosAppService>();
         }
     }
 }

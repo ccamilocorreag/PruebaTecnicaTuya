@@ -1,7 +1,7 @@
 ﻿using TuyaPagos.Domain.Entities;
 using TuyaPagos.Domain.Interfaces;
 
-namespace TuyaPagos.Infraestructure.Data.Repositories
+namespace TuyaPagos.Infraestructure.Data.Repositories.Facturacion
 {
     public class FacturacionRepository : GenericRepository<Factura>, IFacturacionRepository
     {

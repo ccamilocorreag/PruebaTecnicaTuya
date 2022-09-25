@@ -1,5 +1,8 @@
 ﻿using TuyaPagos.Domain.Interfaces;
-using TuyaPagos.Infraestructure.Data.Repositories;
+using TuyaPagos.Infraestructure.Data.Repositories.Clientes;
+using TuyaPagos.Infraestructure.Data.Repositories.Facturacion;
+using TuyaPagos.Infraestructure.Data.Repositories.Pedidos;
+using TuyaPagos.Infraestructure.Data.Repositories.Productos;
 
 namespace TuyaPagos.Infraestructure.Data
 {

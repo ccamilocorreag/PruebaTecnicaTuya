@@ -2,5 +2,11 @@
 {
     public class Enums
     {
+        public enum Estados
+        {
+            PREPARANDO,
+            DESPACHADO,
+            ENTREGADO
+        }
     }
 }

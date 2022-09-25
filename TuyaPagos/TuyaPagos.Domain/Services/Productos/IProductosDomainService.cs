@@ -1,6 +1,6 @@
 ﻿using TuyaPagos.Domain.Entities;
 
-namespace TuyaPagos.Domain.Services
+namespace TuyaPagos.Domain.Services.Productos
 {
     public interface IProductosDomainService
     {

@@ -23,7 +23,16 @@ namespace TuyaPagos.WebApi.Controllers
         {
             _logService.Log("Creando factura ...");
             await _facturacionAppService.CrearFactura(facturaInput);
-            return Ok();
+            return NoContent();
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FacturaOutputDto))]
+        public async Task<ActionResult> GetById(int id)
+        {
+            _logService.Log("Consultando factura ...");
+            return Ok(await _facturacionAppService.GetFacturaById(id));
         }
     }
 }

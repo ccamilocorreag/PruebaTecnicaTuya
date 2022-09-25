@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TuyaPagos.Domain\TuyaPagos.Domain.csproj" />
-    <ProjectReference Include="..\TuyaPagos.Infraestructure\TuyaPagos.Infraestructure.csproj" />
+    <PackageReference Include="AutoMapper" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\Pedidos\" />
+    <ProjectReference Include="..\TuyaPagos.Domain\TuyaPagos.Domain.csproj" />
+    <ProjectReference Include="..\TuyaPagos.Infraestructure\TuyaPagos.Infraestructure.csproj" />
   </ItemGroup>
 
 </Project>

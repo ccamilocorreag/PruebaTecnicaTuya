@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TuyaPagos.Domain.Entities;
 using TuyaPagos.Domain.Interfaces;
 
-namespace TuyaPagos.Infraestructure.Data.Repositories
+namespace TuyaPagos.Infraestructure.Data.Repositories.Pedidos
 {
     public class PedidosRepository : GenericRepository<Pedido>, IPedidosRepository
     {

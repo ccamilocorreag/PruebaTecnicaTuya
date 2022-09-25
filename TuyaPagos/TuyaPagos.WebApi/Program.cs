@@ -1,3 +1,4 @@
+using TuyaPagos.Application.Profiles;
 using TuyaPagos.WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services
     .AddRepositories()
     .AddBusinessServices();
 
+builder.Services.AddAutoMapper(typeof(AppProfile));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
