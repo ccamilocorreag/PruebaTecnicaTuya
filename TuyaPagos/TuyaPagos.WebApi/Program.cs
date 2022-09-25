@@ -1,3 +1,5 @@
+using FluentValidation.AspNetCore;
+using System.Reflection;
 using TuyaPagos.Application.Profiles;
 using TuyaPagos.WebApi.Extensions;
 
@@ -12,7 +14,8 @@ builder.Services
 
 builder.Services.AddAutoMapper(typeof(AppProfile));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
