@@ -19,17 +19,17 @@ namespace TuyaPagos.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(PedidoInputDto pedidoInput)
+        public async Task<IActionResult> Create(PedidoInputDto pedidoInput)
         {
             _logService.Log("Creando pedido ...");
             await _pedidosAppService.CreatePedido(pedidoInput);
-            return Ok();
+            return NoContent();
         }
 
         [HttpGet]
         [Route("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PedidoOutputDto))]
-        public async Task<ActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             _logService.Log("Consultando pedido ...");
             return Ok(await _pedidosAppService.GetPedidoById(id));

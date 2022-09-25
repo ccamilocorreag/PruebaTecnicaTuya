@@ -23,9 +23,14 @@ namespace TuyaPagos.Domain.Services.Facturacion
             return factura;
         }
 
-        public Task<Factura> GetFacturaById(int facturaId)
+        public async Task<Factura> GetFacturaById(int facturaId)
         {
-            return UnitOfWork.FacturacionRepository.GetByIdAsync(facturaId);
+            return await UnitOfWork.FacturacionRepository.GetByIdAsync(facturaId);
+        }
+
+        public async Task<Factura> GetFacturaCompletaById(int facturaId)
+        {
+            return await UnitOfWork.FacturacionRepository.GetFacturaCompletaById(facturaId);
         }
 
         public async Task GuardarFactura(Factura factura)

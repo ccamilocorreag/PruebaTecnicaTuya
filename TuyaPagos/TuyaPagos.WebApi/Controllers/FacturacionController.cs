@@ -29,10 +29,19 @@ namespace TuyaPagos.WebApi.Controllers
         [HttpGet]
         [Route("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FacturaOutputDto))]
-        public async Task<ActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
             _logService.Log("Consultando factura ...");
             return Ok(await _facturacionAppService.GetFacturaById(id));
+        }
+
+        [HttpGet]
+        [Route("{id:int}/Complete")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FacturaOutputDto))]
+        public async Task<IActionResult> GetFacturaCompletaById(int id)
+        {
+            _logService.Log("Consultando factura ...");
+            return Ok(await _facturacionAppService.GetFacturaCompletaById(id));
         }
     }
 }

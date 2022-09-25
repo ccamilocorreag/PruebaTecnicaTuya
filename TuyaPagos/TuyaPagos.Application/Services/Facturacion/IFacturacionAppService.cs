@@ -6,5 +6,6 @@ namespace TuyaPagos.Application.Services.Facturacion
     {
         public Task CrearFactura(FacturaInputDto facturaInput);
         Task<FacturaOutputDto> GetFacturaById(int id);
+        Task<FacturaOutputDto> GetFacturaCompletaById(int id);
     }
 }

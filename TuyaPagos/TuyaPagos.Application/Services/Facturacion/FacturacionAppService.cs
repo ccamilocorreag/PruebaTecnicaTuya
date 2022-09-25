@@ -50,5 +50,13 @@ namespace TuyaPagos.Application.Services.Facturacion
 
             return _mapper.Map<FacturaOutputDto>(factura);
         }
+
+        public async Task<FacturaOutputDto> GetFacturaCompletaById(int id)
+        {
+            var factura = await _facturacionDomainService.GetFacturaCompletaById(id);
+            if (factura is null) throw new NotFoundException("Factura no encontrada");
+
+            return _mapper.Map<FacturaOutputDto>(factura);
+        }
     }
 }

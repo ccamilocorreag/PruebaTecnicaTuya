@@ -7,6 +7,7 @@ namespace TuyaPagos.Domain.Services.Facturacion
         Task GuardarFactura(Factura factura);
         Factura CalcularTotales(Factura factura);
         Task<Factura> GetFacturaById(int facturaId);
+        Task<Factura> GetFacturaCompletaById(int facturaId);
         Task<IEnumerable<DetalleFactura>> CalcularTotalesDetalleFactura(IEnumerable<DetalleFactura> detalleFactura);
     }
 }

@@ -4,7 +4,7 @@
     {
         public int Cantidad { get; set; }
         public int ProductoId { get; set; }
-        public virtual ProductoOutputDto Producto { get; set; }
+        public virtual ProductoOutputDto ProductoFk { get; set; }
         public long ValorBruto { get; set; }
         public int Impuesto { get; set; }
         public long ValorNeto { get; set; }

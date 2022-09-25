@@ -1,4 +1,5 @@
-﻿using TuyaPagos.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using TuyaPagos.Domain.Entities;
 using TuyaPagos.Domain.Interfaces;
 
 namespace TuyaPagos.Infraestructure.Data.Repositories.Facturacion
@@ -9,6 +10,13 @@ namespace TuyaPagos.Infraestructure.Data.Repositories.Facturacion
         {
         }
 
-
+        public async Task<Factura> GetFacturaCompletaById(int id)
+        {
+            return await _context.Facturas
+                .Include(x => x.ClienteFk)
+                .Include(x => x.DetalleFactura).ThenInclude(x => x.ProductoFk)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+        }
     }
 }
